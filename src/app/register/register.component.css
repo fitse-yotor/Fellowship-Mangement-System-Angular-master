@@ -1,0 +1,8 @@
+#bgggg {
+  height: 100%;
+  display: flex;
+  /*flex-flow: column;*/
+  align-items: center;
+  background-image: linear-gradient(to right, #E22D2D, #FB6060);
+}
+

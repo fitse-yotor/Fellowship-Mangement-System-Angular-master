@@ -1,0 +1,55 @@
+<!--<button mat-button (click)="onNoClick()">No Thanks</button>-->
+<!--<h1 mat-dialog-title>Hi {{data.name}}</h1>-->
+<!--<div mat-dialog-content>-->
+<!--<p>What's your favorite animal?</p>-->
+<!--<mat-form-field>-->
+<!--<input matInput [(ngModel)]="data.animal">-->
+<!--</mat-form-field>-->
+<!--</div>-->
+
+<form [formGroup]="campaignsModalForm" (ngSubmit)="campaignsModal(campaignsModalForm.value)">
+
+<mat-form-field>
+    <input matInput placeholder="Port Name" type="text" formControlName="port_name">
+    <mat-error style="color: red" *ngIf="campaignsModalForm.get('port_name').invalid && (campaignsModalForm.get('port_name').dirty ||
+    campaignsModalForm.get('port_name').touched) && campaignsModalForm.get('port_name').errors?.minlength">
+        The port name must be at least 4 characters!
+    </mat-error>
+</mat-form-field>
+
+<mat-form-field>
+    <mat-label>Port Type</mat-label>
+    <mat-select formControlName="port_type">
+        <mat-option *ngFor="let portInterface of portsInterface" [value]="portInterface.type">
+            {{portInterface.name}}
+        </mat-option>
+        <!--<mat-error style="color: red" *ngIf="campaignsModalForm.get('port_type').invalid && (campaignsModalForm.get('port_type').dirty ||-->
+      <!--campaignsModalForm.get('port_type').touched) && campaignsModalForm.get('port_type').errors?.required">-->
+            <!--Please select port type!-->
+        <!--</mat-error>-->
+    </mat-select>
+</mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Negarit Campaign Id" type="text" formControlName="negarit_campaign_id">
+    <mat-error style="color: red" *ngIf="campaignsModalForm.get('negarit_campaign_id').invalid && (campaignsModalForm.get('negarit_campaign_id').dirty ||
+      campaignsModalForm.get('negarit_campaign_id').touched) && campaignsModalForm.get('negarit_campaign_id').errors?.required">
+      Please insert negarit campaign id!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Negarit SMS Port Id" type="text" formControlName="negarit_sms_port_id">
+    <mat-error style="color: red" *ngIf="campaignsModalForm.get('negarit_sms_port_id').invalid && (campaignsModalForm.get('negarit_sms_port_id').dirty ||
+      campaignsModalForm.get('negarit_sms_port_id').touched) && campaignsModalForm.get('negarit_sms_port_id').errors?.required">
+      Please insert negarit sms port id!
+    </mat-error>
+  </mat-form-field>
+
+
+  <!--<button mat-raised-button color="primary" type="submit" >Add contact</button>-->
+  <div mat-dialog-actions>
+    <button mat-button mat-raised-button color="primary" type="submit"  cdkFocusInitial >Add New Port</button>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+  </div>
+</form>

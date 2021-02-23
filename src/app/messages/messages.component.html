@@ -1,0 +1,106 @@
+<p style="font-weight: bolder; font-size: x-large; margin-top: 61px; margin-left: 20px"> SENT MESSAGES </p>
+
+<!--<ol>-->
+<!--<li>-->
+<!--<mat-form-field>-->
+<!--<input matInput [(ngModel)]="name" placeholder="What's your name?">-->
+<!--</mat-form-field>-->
+<!--</li>-->
+<!--<div class="create" style="color: yellow; width: 100%">-->
+<!--<li>-->
+<!--<button class="l1" mat-raised-button (click)="openDialog()">Create</button>-->
+<div style="margin-top: 30px; left: 30px ;display: flex; flex-flow: row">
+  <button mat-raised-button style="height: 40px; left: 20px" (click)="openCreate()">
+    <mat-icon>add</mat-icon>
+    New Message
+  </button>
+  <mat-form-field class="col-md-4"  style="left: 100px; margin-bottom: 10px">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+  </mat-form-field>
+</div>
+<!--<button mat-button color="primary" style="margin-top: 61px; left: 50px" mat-raised-button (click)="openImportContact()"> Import Contact  </button>-->
+<!--</li>-->
+<!--<li *ngIf="animal">-->
+<!--You chose: <i>{{animal}}</i>-->
+<!--</li>-->
+<!--&lt;!&ndash;</ol>&ndash;&gt;-->
+<!--</div>-->
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px', backdropBackgroundColour: 'rgba(0, 0, 0, 0.3)'}"></ngx-loading>
+<div class="container">
+
+  <table style="width: 100%" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="message">
+      <th mat-header-cell *matHeaderCellDef style="font-weight: bold">Message </th>
+      <td mat-cell *matCellDef="let element"> {{element.message}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="sent_to">
+      <th mat-header-cell *matHeaderCellDef style="font-weight: bold">Sent To </th>
+      <td mat-cell *matCellDef="let element"> {{element.sent_to}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="is_sent">
+      <th mat-header-cell *matHeaderCellDef style="font-weight: bold">Sent</th>
+      <td mat-cell *matCellDef="let element"> {{element.is_sent | isEqualTo: 1 }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="is_delivered">
+      <th mat-header-cell *matHeaderCellDef style="font-weight: bold">Delivered</th>
+      <td mat-cell *matCellDef="let element"> {{element.is_delivered | isEqualTo: 1 }}</td>
+    </ng-container>
+
+     <!--Weight Column -->
+    <!--<ng-container matColumnDef="campaign">-->
+      <!--<th mat-header-cell *matHeaderCellDef style="font-weight: bold"> Campaign </th>-->
+      <!--<td mat-cell *matCellDef="let element"> {{element.campaign}} </td>-->
+    <!--</ng-container>-->
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef style="font-weight: bold"> Created At </th>
+      <td mat-cell *matCellDef="let element"> {{element.created_at | date :'fullDate'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sent_by">
+      <th mat-header-cell *matHeaderCellDef style="font-weight: bold"> Created by </th>
+      <td mat-cell *matCellDef="let element"> {{element.sent_by.full_name}} </td>
+    </ng-container>
+
+    <!--<ng-container matColumnDef="sms_port_id">-->
+      <!--<th mat-header-cell *matHeaderCellDef style="font-weight: bold"> Port Id </th>-->
+      <!--<td mat-cell *matCellDef="let element"> {{element.sms_port_id}} </td>-->
+    <!--</ng-container>-->
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef style="font-weight: bold"> Action </th>
+      <td mat-cell *matCellDef="let element">
+        <!--<button mat-button="">-->
+          <!--<mat-icon  mat-raised-button (click)="openUpdate(element)">edit</mat-icon></button>-->
+        <button mat-button=""
+                mwlConfirmationPopover
+                [popoverTitle]="'Confirm Deletion'"
+                [popoverMessage]="'Are you sure you want to delete this contact'"
+                placement="left"
+                (confirm)="deleteMessage(element.id)"
+                (cancel)="cancelClicked = true"
+        >
+
+          <mat-icon style="color: red;" mat-raised-button>delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
